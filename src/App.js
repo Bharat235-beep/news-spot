@@ -15,7 +15,7 @@ this.setState({progress:prog})
 }
   render() {
     return (
-      <BrowserRouter  basename="/news-spot">
+      <BrowserRouter  basename="/News-Spot">
       <Navbar/>
       <LoadingBar color='#f11946'
         progress={this.state.progress}
