@@ -15,13 +15,13 @@ this.setState({progress:prog})
 }
   render() {
     return (
-      <BrowserRouter  basename="/News-Spot">
+      <BrowserRouter  basename="/news-spot">
       <Navbar/>
       <LoadingBar color='#f11946'
         progress={this.state.progress}
         onLoaderFinished={() => this.setProgress(0)}/>
       <Routes>
-        
+      <Route path="/news-spot" element={<News setProgress={this.setProgress}/>}></Route>
         <Route index element={<News setProgress={this.setProgress}/>}></Route>
         <Route exact  path="/category/science" element={  <News setProgress={this.setProgress} key="science" category="science" />} ></Route> 
         <Route exact  path="/category/sports" element={<News setProgress={this.setProgress} key="sports" category="sports" />} ></Route> 
