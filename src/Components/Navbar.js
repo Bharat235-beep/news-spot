@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-export default class Navbar extends Component {
-  render() {
+export default function Navbar()  {
+  
     return (
       <div className='container' style={{marginTop:"90px"}}>
            <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -25,19 +25,23 @@ export default class Navbar extends Component {
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><Link className="dropdown-item" to="/category/science">Science</Link></li>
             <li><Link className="dropdown-item" to="/category/sports">Sports</Link></li>
-            <li><hr className="dropdown-divider"/></li>
+            {/* <li><hr className="dropdown-divider"/></li> */}
             <li><Link className="dropdown-item" to="/category/entertainment">Entertainment</Link></li>
             <li><Link className="dropdown-item" to="/category/business">Business</Link></li>
             <li><Link className="dropdown-item" to="/category/health">Health</Link></li>
+            <li><Link className="dropdown-item" to="/category/technology">Technology</Link></li>
           </ul>
         </li>
         
       </ul>
-      
+      <form class="d-flex">
+        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <button className="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
   </div>
 </nav>
       </div>
     )
-  }
+  
 }
