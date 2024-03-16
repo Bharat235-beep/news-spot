@@ -1,7 +1,20 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-export default function Navbar()  {
-  
+import React, { useState } from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+export default function Navbar(props)  {
+  let {setSearch}=props
+  let [nsearch,setNsearch]=useState("")
+  const navigate= useNavigate()
+  const handleChange=(e)=>{
+
+   setNsearch(e.target.value)
+   
+  }
+  const handleSearch=async(e)=>{
+await setSearch(nsearch)
+setNsearch("")
+navigate("/search")
+e.preventDefault()
+  }
     return (
       <div className='container' style={{marginTop:"90px"}}>
            <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -34,9 +47,9 @@ export default function Navbar()  {
         </li>
         
       </ul>
-      <form class="d-flex">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
+      <form onSubmit={handleSearch} className="d-flex">
+        <input className="form-control me-2" value={nsearch} onChange={handleChange} type="text" placeholder="Search" aria-label="Search"/>
+        <button className="btn btn-outline-success"type='submit'  >Search</button>
       </form>
     </div>
   </div>
