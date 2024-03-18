@@ -3,9 +3,11 @@ import NewsItem from './NewsItem'
 import Spinner from './Spinner'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useNavigate } from 'react-router-dom';
 
 export default function News(props) {
 const pageSize=6;
+let navigate=useNavigate();
   const [articles, setArticles] = useState([]);
   let [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,14 @@ const pageSize=6;
 
   }
 useEffect(()=>{
-  update();
+  
+  if(localStorage.getItem('NewsSpot-token')){
+
+    update();
+  }
+  else{
+    navigate('/login')
+  }
   // eslint-disable-next-line
 },[])
  
@@ -62,7 +71,7 @@ useEffect(()=>{
       <InfiniteScroll
   dataLength={articles.length} 
   next={fetchData}
-  hasMore={articles.length<totalResults}
+  hasMore={articles.length!==totalResults}
   loader={<h4 style={{ textAlign: 'center' }}> Loading...</h4>}
   endMessage={
     <p style={{ textAlign: 'center' }}>

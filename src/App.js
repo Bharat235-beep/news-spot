@@ -4,6 +4,8 @@ import News from './Components/News'
 import Navbar from './Components/Navbar'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NewsSearch from './Components/NewsSearch';
+import Signup from './Components/Signup';
+import Login from './Components/Login';
 export default function App() {
   const [progress, setProgress] = useState(0);
   const [search, setSearch] = useState("india");
@@ -24,6 +26,8 @@ export default function App() {
         <Route exact path="/category/health" element={<News setProgress={setProgress} key="health" category="health" />} ></Route>
         <Route exact path="/category/entertainment" element={<News setProgress={setProgress} key="entertainment" category="entertainment" />} ></Route>
         <Route exact path="/search"  element={<NewsSearch setProgress={setProgress} search={search} key={search} />}></Route>
+        <Route exact path="/signup" element={<Signup />} />
+        <Route exact path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   )

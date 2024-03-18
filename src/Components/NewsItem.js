@@ -7,7 +7,7 @@ export default function NewsItem(props) {
     
     return (
    
-         <div className="card" style={{width: "18rem"}} >   
+         <div className="card my-4" style={{width: "18rem"}} >   
   <img src={imageurl} className="card-img-top" alt="..."style={{width: "18rem",height:"12rem"}}/>
   <div className="card-body" >
     <h5 className="card-title">{title}...</h5>
