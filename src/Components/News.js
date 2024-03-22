@@ -6,6 +6,20 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
 
 export default function News(props) {
+  const [mynews,setMynews]=useState([])
+  const getNews = async () => {
+    const response = await fetch("http://localhost:5000/api/news/fetchallnews", {
+      method: "GET", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem('NewsSpot-token')
+      }
+    });
+    const result=await response.json()
+    console.log(result)
+   await setMynews(result)
+    console.log(typeof(mynews))
+  }
 const pageSize=6;
 let navigate=useNavigate();
   const [articles, setArticles] = useState([]);
@@ -22,7 +36,7 @@ let navigate=useNavigate();
     let parseData = await data.json();
     props.setProgress(80)
    console.log(parseData)
-     setArticles( parseData.articles);
+    await setArticles( parseData.articles);
     setTotalResults( parseData.totalResults )
     setLoading(false);
     props.setProgress(100)
@@ -57,6 +71,7 @@ useEffect(()=>{
   if(localStorage.getItem('NewsSpot-token')){
 
     update();
+    getNews();
   }
   else{
     navigate('/login')
@@ -82,7 +97,7 @@ useEffect(()=>{
         {!loading && articles.map((value) => {
 
           return (<div className='col-md-4 ' key={value.url}>
-            <NewsItem title={value.title} description={value.description} imageurl={value.urlToImage} url={value.url} source={value.source.name} />
+            <NewsItem getNews={getNews} title={value.title} description={value.description} imageurl={value.urlToImage} url={value.url} source={value.source.name} />
           </div>)
 
         })}

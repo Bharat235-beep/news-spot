@@ -6,10 +6,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NewsSearch from './Components/NewsSearch';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
+import SavedNews from './Components/SavedNews';
 export default function App() {
   const [progress, setProgress] = useState(0);
   const [search, setSearch] = useState("india");
-  
+  const [mynews,setMynews]=useState([])
   return (
     <BrowserRouter basename="/News-Spot">
       <Navbar setSearch={setSearch} />
@@ -28,6 +29,7 @@ export default function App() {
         <Route exact path="/search"  element={<NewsSearch setProgress={setProgress} search={search} key={search} />}></Route>
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path="/saved-news" element={<SavedNews mynews={mynews} setMynews={setMynews} setProgress={setProgress}/>} />
       </Routes>
     </BrowserRouter>
   )
