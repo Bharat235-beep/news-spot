@@ -20,7 +20,7 @@ export default function News(props) {
    await setMynews(result)
     console.log(typeof(mynews))
   }
-const pageSize=6;
+const pageSize=11;
 let navigate=useNavigate();
   const [articles, setArticles] = useState([]);
   let [page, setPage] = useState(1);
@@ -56,9 +56,9 @@ let navigate=useNavigate();
       
 //   }
   const fetchData=async()=>{
-   await setPage(page+1)
-    let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=9dd8cea0eca2470c84fec3e770acf97b&page=${page}&pageSize=${pageSize}`)
    
+    let data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=9dd8cea0eca2470c84fec3e770acf97b&page=${page+1}&pageSize=${pageSize}`)
+    await setPage(page+1)
     let parseData = await data.json();
  
    console.log(parseData)
@@ -81,7 +81,7 @@ useEffect(()=>{
  
   return (
     <div className='container '>
-
+ <h2 className='head'> {articles.length===0?" ":`Top Headlines-${props.category}`}</h2>
       {loading && <Spinner />}
       <InfiniteScroll
   dataLength={articles.length} 
@@ -96,7 +96,7 @@ useEffect(()=>{
       <div className='row justify-content-center '>
         {!loading && articles.map((value) => {
 
-          return (<div className='col-md-4 ' key={value.url}>
+          return (<div className='col md-4 ' key={value.url}>
             <NewsItem getNews={getNews} title={value.title} description={value.description} imageurl={value.urlToImage} url={value.url} source={value.source.name} />
           </div>)
 

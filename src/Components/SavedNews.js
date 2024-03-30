@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import NewsItem from './NewsItem';
 import Spinner from './Spinner';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function SavedNews(props) {
     let location=useLocation()
-   
+   let navigate=useNavigate()
     const [loading, setLoading] = useState(true);
     const getNews = async () => {
         props.setProgress(20);
@@ -27,17 +27,24 @@ export default function SavedNews(props) {
       props.setProgress(100)
     }
     useEffect(()=>{
-getNews();
+      if(localStorage.getItem('NewsSpot-token')){
+
+        getNews();
+      }
+      else{
+        navigate('/login')
+      }
     },[])
   return (
     <div className='container'>
+     <h2 className='head'> {props.mynews.length===0?"Nothing to show":"Your news"}</h2>
           {loading && <Spinner />}
           <div className='row'>
       {
       !loading &&  props.mynews.map((value)=>{
-            return (<div className='col-md-4 ' key={value.url}>
+            return (<div className='col md-4 ' key={value.url}>
              
-            <NewsItem mynews={props.mynews} setMynews={props.setMynews}  id={value._id} title={value.title} description={value.description} imageurl={value.imageurl} url={value.url} source={value.source.name} />
+            <NewsItem mynews={props.mynews} setMynews={props.setMynews}  id={value._id} title={value.title} description={value.description} imageurl={value.imageurl} url={value.url} source={value.source} />
           </div>)
         })
       }

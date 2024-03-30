@@ -3,9 +3,11 @@ import { useEffect } from 'react'
 import NewsItem from './NewsItem';
 import Spinner from './Spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewsSearch(props) {
   const { search, setProgress } = props
+  let navigate=useNavigate()
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -38,8 +40,8 @@ export default function NewsSearch(props) {
   //   update()
   // }
   const fetchData=async()=>{
+    let data = await fetch(`https://newsapi.org/v2/everything?q=${search}&apiKey=9dd8cea0eca2470c84fec3e770acf97b&page=${page+1}&pageSize=${pageSize}`)
     await setPage(page+1)
-     let data = await fetch(`https://newsapi.org/v2/everything?q=${search}&apiKey=9dd8cea0eca2470c84fec3e770acf97b&page=${page}&pageSize=${pageSize}`)
     
      let parseData = await data.json();
   
@@ -49,11 +51,19 @@ export default function NewsSearch(props) {
  
    }
   useEffect(() => {
-    update();
+    if(localStorage.getItem('NewsSpot-token')){
+
+      update();
+     
+    }
+    else{
+      navigate('/login')
+    }
     // eslint-disable-next-line
   }, [])
   return (
     <div className='container'>
+      <h2 className='head'>Showing result for '{search}'</h2>
       {loading && <Spinner />}
       <InfiniteScroll
   dataLength={articles.length} 

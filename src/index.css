@@ -5,9 +5,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: fixed rgba(212, 109, 0, 0.706) url("C:\Users\91628\Downloads\news-logo.png") center no-repeat;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.col :hover{
+  color: white;
+  background-color: rgba(0, 0, 0, 0.599);
+  box-shadow: 1px 1px 3px rgba(255, 0, 0, 0.163);
+}
+.myactive{
+ 
+  background-color: white;
+  border-radius: 20px;
+}
+.nav-item :hover{
+  background-color: rgb(164, 164, 211);
+ border-radius: 20px;
+}
+.btn{
+  border-radius: 100px;
+}
+.dropdown-menu{
+  border-radius: 20px;
+}
+
+.head{
+  color: white;
+text-shadow: 5px 5px 5px blue;
+text-transform: uppercase;
+  width: 100%;
+  text-align: center;
 }
