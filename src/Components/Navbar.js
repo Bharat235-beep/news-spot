@@ -59,7 +59,7 @@ export default function Navbar(props) {
 
             </ul>
             <form onSubmit={handleSearch} className="d-flex">
-              <input className="form-control me-2" value={nsearch} onChange={handleChange} type="text" placeholder="Search" aria-label="Search" />
+              <input className="form-control me-2" required  value={nsearch} onChange={handleChange} type="text" placeholder="Search" aria-label="Search" />
               <button className="btn btn-outline-success" type='submit'  >Search</button>
             </form>
           </div>

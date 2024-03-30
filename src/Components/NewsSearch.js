@@ -63,6 +63,7 @@ export default function NewsSearch(props) {
   }, [])
   return (
     <div className='container'>
+    
       <h2 className='head'>Showing result for '{search}'</h2>
       {loading && <Spinner />}
       <InfiniteScroll

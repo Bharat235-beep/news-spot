@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from 'react'
-
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 export default function Login() {
   
   let navigate = useNavigate()
@@ -29,7 +30,7 @@ export default function Login() {
       setTimeout(()=>{navigate('/')},500)
     }
   else{
-    alert('please enter correct details');
+    toast.warning('please enter correct details');
   }
    
   
@@ -55,7 +56,10 @@ navigate('/');
   })
 
   return (
-    <>  
+    <> 
+       <ToastContainer position="top-center" autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true} theme="colored"/> 
     <h1 className='d-flex justify-content-center my-3' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>Login to your account</h1>
     {  <div className='container d-flex justify-content-center my-3 ' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>
    

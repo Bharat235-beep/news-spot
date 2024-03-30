@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 export default function Signup(props) {
   let navigate=useNavigate()
@@ -8,8 +9,8 @@ export default function Signup(props) {
         setDetail({...detail,[e.target.name]:e.target.value});
     }
    const handleSubmit=async(e)=>{
+     e.preventDefault();
     if(detail.cpassword===detail.password){
-    e.preventDefault();
     console.log(detail)
     
     try{ const response = await fetch("http://localhost:5000/api/auth/createUser", {
@@ -27,17 +28,17 @@ export default function Signup(props) {
       setTimeout(()=>{navigate('/')},500)
     }
     else{
-      alert('please enter correct details');
+      toast.error('Email already exist');
     }
     
     
+    // setDetail({name:"",email:"",password:"",cpassword:""})
   }catch(error){
     console.log(error)
   }
-  setDetail({name:"",email:"",password:""})
 }
 else{
-  alert('please enter correct details');
+ toast.warning('please enter correct details');
 }
   // let result=signup(detail.name,detail.email,detail.password)
   // if(result){
@@ -49,6 +50,9 @@ else{
 
   return (
     <>
+      <ToastContainer position="top-center" autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true} theme="colored"/>
     <h1 className='d-flex justify-content-center my-3' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>Create account</h1>
     <div className='container d-flex justify-content-center my-3' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>
      <form className='w-50 ' onSubmit={handleSubmit}>
