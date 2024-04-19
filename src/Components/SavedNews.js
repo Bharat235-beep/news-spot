@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export default function SavedNews(props) {
     let location=useLocation()
    let navigate=useNavigate()
+
     const [loading, setLoading] = useState(true);
     const getNews = async () => {
         props.setProgress(20);
@@ -26,25 +27,31 @@ export default function SavedNews(props) {
       setLoading(false)
       props.setProgress(100)
     }
+   
     useEffect(()=>{
       if(localStorage.getItem('NewsSpot-token')){
-
+console.log("rendering")
         getNews();
       }
       else{
         navigate('/login')
       }
+      // eslint-disable-next-line 
     },[])
+    useEffect(()=>{
+      getNews()
+     // eslint-disable-next-line 
+    },[props.mynews.length])
   return (
     <div className='container'>
-     <h2 className='head'> {props.mynews.length===0?"Nothing to show":"Your news"}</h2>
+     <h2 className='head'> {props.mynews.length===0?"Nothing has been saved yet":"You have "+props.mynews.length+ " saved news"}</h2>
           {loading && <Spinner />}
           <div className='row'>
       {
       !loading &&  props.mynews.map((value)=>{
             return (<div className='col md-4 ' key={value.url}>
              
-            <NewsItem mynews={props.mynews} setMynews={props.setMynews}  id={value._id} title={value.title} description={value.description} imageurl={value.imageurl} url={value.url} source={value.source} />
+            <NewsItem getNews={getNews} mynews={props.mynews} setMynews={props.setMynews}  id={value._id} title={value.title} description={value.description} imageurl={value.imageurl} url={value.url} source={value.source} />
           </div>)
         })
       }

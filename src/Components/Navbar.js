@@ -16,7 +16,7 @@ export default function Navbar(props) {
   }
   const handleSearch = async (e) => {
     await setSearch(nsearch)
-    setNsearch("")
+     setNsearch("")
     navigate("/search")
     e.preventDefault()
   }
@@ -33,18 +33,18 @@ export default function Navbar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link style={loc.pathname!=="/"?{color:'white'}:{color:'black'}} className={`nav-link ${loc.pathname==="/"?"myactive":""}`} aria-current="page" to="/">Home</Link>
+              <li className="nav-item mx-2">
+                <Link style={loc.pathname!=="/"?{color:'white'}:{color:'black'}} className={`nav-link ${loc.pathname==="/"?"myactive":""}`} aria-current="page" to="/"><i className="fa-solid fa-house"></i> Home</Link>
               </li>
               {/* <li className="nav-item">
                 <Link style={loc.pathname==="/"?{color:'white'}:{color:'black'}} className={`nav-link ${loc.pathname==="/"?"myactive":""}`} to="/">About</Link>
               </li> */}
-              <li className="nav-item">
-                <Link style={loc.pathname!=="/saved-news"?{color:'white'}:{color:'black'}} className={`nav-link ${loc.pathname==="/saved-news"?"myactive":""}`} to="/saved-news">Saved News</Link>
+              <li className="nav-item mx-2">
+                <Link style={loc.pathname!=="/saved-news"?{color:'white'}:{color:'black'}} className={`nav-link ${loc.pathname==="/saved-news"?"myactive":""}`} to="/saved-news"><i className="fa-regular fa-bookmark"></i>Saved News</Link>
               </li>
               <li className="nav-item dropdown">
                 <Link className="nav-link dropdown-toggle" to="/category" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{color:'white'}}>
-                  Category
+                <i className="fa-solid fa-list "></i>   Category
                 </Link>
                 <ul className="dropdown-menu bg-dark"  aria-labelledby="navbarDropdown">
                   <li><Link style={loc.pathname!=="/category/science"?{color:'white'}:{color:'black'}} className={`dropdown-item ${loc.pathname==="/category/science"?"myactive":""}`} to="/category/science">Science</Link></li>
@@ -59,8 +59,8 @@ export default function Navbar(props) {
 
             </ul>
             <form onSubmit={handleSearch} className="d-flex">
-              <input className="form-control me-2" required  value={nsearch} onChange={handleChange} type="text" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type='submit'  >Search</button>
+              <input className="form-control me-2 rounded-pill" required  value={nsearch} onChange={handleChange} type="text" placeholder="Search" aria-label="Search" />
+              <button className="d-flex btn btn-success " type='submit' >Search <i className="fa-solid fa-magnifying-glass"></i></button>
             </form>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function Navbar(props) {
               {!(localStorage.getItem('NewsSpot-token')) ?
                 ""
                 :
-                <button type="button" className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                <button type="button" className="d-flex btn btn-danger" onClick={handleLogout}>Logout <i className="fa-solid fa-right-from-bracket"></i></button>
               }
             </div>
       </nav>

@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 export default function Signup(props) {
+  let [showPass,setShowPass]=useState(false);
+  let [showCon,setShowCon]=useState(false);
   let navigate=useNavigate()
     let [detail,setDetail]=useState({name:"",email:"",password:"",cpassword:""});
     const onchange = (e) => {
@@ -25,7 +27,8 @@ export default function Signup(props) {
     
     if(result.success){
       localStorage.setItem("NewsSpot-token",result.token);
-      setTimeout(()=>{navigate('/')},500)
+      toast.success("Your account created successfully!!")
+      setTimeout(()=>{navigate('/')},1000)
     }
     else{
       toast.error('Email already exist');
@@ -50,32 +53,38 @@ else{
 
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000}
+      <ToastContainer position="top-center" autoClose={2000}
         hideProgressBar={true}
         newestOnTop={true} theme="colored"/>
-    <h1 className='d-flex justify-content-center my-3' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>Create account</h1>
-    <div className='container d-flex justify-content-center my-3' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>
-     <form className='w-50 ' onSubmit={handleSubmit}>
-      <div className='mb-3'>
+    <h1 className='d-flex justify-content-center my-3' style={{color:"purple",fontWeight:"boldest",fontFamily:"cursive"}}>Create your account</h1>
+    <div className=' container d-flex justify-content-center my-3 w-75' style={{color:"white",fontWeight:"boldest",fontFamily:"cursive"}}>
+     <form className='form w-50 p-4  border border-white border-3 ' onSubmit={handleSubmit}>
       <label htmlFor="name" className="form-label">Username</label>
+      <div className='mb-3 d-flex flex-row bg-secondary rounded-2'>
+      <i className="m-2 fa-solid fa-user"></i>
       <input id='name' name='name'value={detail.name} onChange={onchange} className="form-control" type="text" placeholder="Please enter username here.." aria-label="default input example" minLength={5} required/>
       </div>
-  <div className="mb-3">
     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" name='email' value={detail.email} onChange={onchange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
-    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+  <div className="mb-3 d-flex flex-row bg-secondary rounded-2">
+  <i className="m-2 fa-solid fa-envelope"></i>
+    <input type="email" name='email' value={detail.email} onChange={onchange} className="form-control" id="exampleInputEmail1" placeholder="Please enter your email here.." aria-describedby="emailHelp" required/>
+    {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
   </div>
-  <div className="mb-3">
     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" minLength={4} maxLength={15} required name='password' value={detail.password} onChange={onchange} className="form-control" id="exampleInputPassword1"/>
+  <div className="mb-3  d-flex flex-row bg-secondary rounded-2">
+  <i className="m-2 fa-solid fa-lock "></i>
+    <input type={showPass? "text":"password"}  minLength={4} maxLength={15} required name='password' value={detail.password} onChange={onchange} className="form-control" id="exampleInputPassword1"/>
+    <i onClick={()=>{setShowPass(!showPass)}} className={`m-2 fa-solid ${showPass?"fa-eye ":"fa-eye-slash"} `}></i>
   </div>
-  <div className="mb-3">
-    <label htmlFor="exampleInputPassword1" className="form-label">Comfirm Password</label>
-    <input type="password" minLength={4} maxLength={15} required name='cpassword' value={detail.cpassword} onChange={onchange} className="form-control" id="exampleInputPassword2"/>
+    <label htmlFor="exampleInputPassword1" className="form-label">Confirm Password</label>
+  <div className="mb-3  d-flex flex-row bg-secondary rounded-2">
+  <i className="m-2 fa-solid fa-lock "></i>
+    <input type={showCon? "text":"password"}  minLength={4} maxLength={15} required name='cpassword' value={detail.cpassword} onChange={onchange} className="form-control" id="exampleInputPassword2"/>
+    <i onClick={()=>{setShowCon(!showCon)}} className={`m-2 fa-solid ${showCon?"fa-eye ":"fa-eye-slash"} `}></i>
   </div>
   
-  <button type="submit" className="btn btn-primary">Submit</button>
-  <Link className='d-flex justify-content-center' to="/login">Already have an account?</Link>
+  <button type="submit" className="btn btn-primary w-100">Submit</button>
+  <span className='d-flex justify-content-center'>Already have an account?<Link  to="/login">Log in</Link> </span>
 </form>
     </div>
     </>

@@ -20,7 +20,7 @@ export default function News(props) {
    await setMynews(result)
     console.log(typeof(mynews))
   }
-const pageSize=11;
+const pageSize=8;
 let navigate=useNavigate();
   const [articles, setArticles] = useState([]);
   let [page, setPage] = useState(1);
@@ -69,7 +69,7 @@ let navigate=useNavigate();
 useEffect(()=>{
   
   if(localStorage.getItem('NewsSpot-token')){
-
+    console.log("rendering")
     update();
     getNews();
   }
@@ -79,24 +79,24 @@ useEffect(()=>{
   // eslint-disable-next-line
 },[])
  
-  return (
+  return (<>
     <div className='container '>
- <h2 className='head'> {articles.length===0?" ":`Top Headlines-${props.category}`}</h2>
+ <h2 className='head '> {articles.length===0?" ":`Top Headlines-${props.category}`}</h2>
       {loading && <Spinner />}
       <InfiniteScroll
   dataLength={articles.length} 
   next={fetchData}
-  hasMore={articles.length!==totalResults}
+  hasMore={articles.length<totalResults}
   loader={<h4 style={{ textAlign: 'center' }}> Loading...</h4>}
   endMessage={
     <p style={{ textAlign: 'center' }}>
-      <b>Yay! You have seen it all</b>
+      <b></b>
     </p>
   }>
-      <div className='row justify-content-center '>
+      <div className='row justify-content-center'>
         {!loading && articles.map((value) => {
 
-          return (<div className='col md-4 ' key={value.url}>
+          return (<div className='col md-3 ' key={value.url}>
             <NewsItem getNews={getNews} title={value.title} description={value.description} imageurl={value.urlToImage} url={value.url} source={value.source.name} />
           </div>)
 
@@ -108,7 +108,7 @@ useEffect(()=>{
       </div>
       </InfiniteScroll>
     </div>
-
+    </>
   )
 
 }

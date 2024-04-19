@@ -10,10 +10,24 @@ export default function NewsItem(props) {
     addNews(title, description, imageurl, url, source);
     getNews();
   }
-  const handleDelete = () => {
-    deleteNews(id);
-    getNews();
+  const handleDelete = async() => {
+await deleteNews(id)
+await getNews()
+Promise.all([deleteNews,getNews]).then(()=>{
+  setTimeout(()=>{ props.setMynews(props.mynews.filter((news) => {
+    return (news._id !== id)
+  }))},2000)
+ 
+})
+    //  deleteNews(id).then(()=>{
+    //   getNews().then(()=>{
+        
+    //   })
+    //  })
+    return true
+     
   }
+ 
   const getNews = async () => {
     const response = await fetch("http://localhost:5000/api/news/fetchallnews", {
       method: "GET", // or 'PUT'
@@ -26,6 +40,7 @@ export default function NewsItem(props) {
     console.log(result)
     //  await props.setMynews(result)
     console.log(typeof (props.mynews))
+    return true;
   }
   const addNews = async (title, description, imageurl, url, source) => {
     try {
@@ -43,13 +58,14 @@ export default function NewsItem(props) {
       console.log("Success:", result);
       // props.setMynews(props.mynews.push(result))
       // alert("added successfully")
-      toast.success('Successfully inserted')
+      toast.success('Saved Successfully!!')
     } catch (error) {
       console.error("Error:", error);
     }
   }
   const deleteNews = async (id) => {
-    const response = await fetch(`http://localhost:5000/api/news/deletenews/${id}`, {
+   
+    try {const response = await fetch(`http://localhost:5000/api/news/deletenews/${id}`, {
       method: "DELETE", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -57,29 +73,39 @@ export default function NewsItem(props) {
       }
     });
     const result = await response.json()
+   
+    toast.error("Deleted Successfully!!")
     console.log(result)
-    props.setMynews(props.mynews.filter((news) => {
-      return (news._id !== id)
-    }))
+    
+    
+    // alert("deleted")
+    
+    // setTimeout(()=>{props.setMynews(props.mynews.filter((news) => {
+    //   return (news._id !== id)
+    // }))},3000)
 
+    return true;
+}catch (error) {
+  console.error("Error:", error);
+}
   }
 
 
   return (
     <>
-      <ToastContainer position="top-center" autoClose={3000}
+      <ToastContainer position="top-center" autoClose={2000}
         hideProgressBar={true}
         newestOnTop={true} theme="colored"/>
-      <div className="card my-4" style={{ width: "18rem" }} >
-        <img src={imageurl} className="card-img-top" alt="..." style={{ width: "18rem", height: "12rem" }} />
+      <div className="card my-4" style={{ width: "16rem" ,maxHeight:"30rem",minHeight:'30rem'}} >
+        <img src={imageurl} className="card-img-top" alt="..." style={{ width: "16rem", height: "10rem" }} />
         <div className="card-body" >
-          <h5 className="card-title">{title}...</h5>
+          <h5 className="card-title">{title.slice(0,100)}...</h5>
           <span className="badge bg-secondary">Source: {source}</span>
-          <p className="card-text">{description === null ? "Description is not available" : description.slice(0, 100)}...</p>
-          <div className=' d-flex justify-content-between'>
-            <a href={url} target='_blank' rel="noreferrer" className="btn btn-primary">Read More</a>
-            <button onClick={handleAdd} target='_blank' rel="noreferrer" s className={`flex-end btn btn-success ${location.pathname === "/saved-news" ? "d-none" : ""}`}>Save</button>
-            <button onClick={handleDelete} target='_blank' rel="noreferrer" className={`flex-end btn btn-danger ${location.pathname !== "/saved-news" ? "d-none" : ""}`}>Remove</button>
+          <p className="card-text">{description === null ? "Description is not available" : description.slice(0, 60)}...</p>
+          <div className=' d-flex justify-content-between '>
+            <a href={url} target='_blank' rel="noreferrer" className="btn btn-primary ">Read More</a>
+            <button onClick={handleAdd} target='_blank' rel="noreferrer"  className={`flex-end btn btn-success ${location.pathname === "/saved-news" ? "d-none" : ""}`}><i className="fa-regular fa-bookmark"></i> Save</button>
+            <button onClick={handleDelete} target='_blank' rel="noreferrer" className={`flex-end btn btn-danger ${location.pathname !== "/saved-news" ? "d-none" : ""}`}>Delete<i className="fa-solid fa-trash"></i></button>
           </div>
         </div>
       </div>
